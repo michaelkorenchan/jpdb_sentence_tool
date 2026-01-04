@@ -1,6 +1,7 @@
 # JPDB Sentence Tool
 
 A CLI tool that creates JPDB decks from Japanese text and automatically sets custom sentences for new vocabulary cards using the actual sentences from the source text.
+(This project is almost entirely vibe-coded)
 
 ## The Problem
 
