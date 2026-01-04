@@ -1,0 +1,2096 @@
+{
+    "openapi": "3.1.0",
+    "x-stoplight": {
+        "id": "mgsimhgxpjpqe"
+    },
+    "info": {
+        "title": "jpdb.io public API",
+        "version": "1.0",
+        "contact": {
+            "email": "jpdb@jpdb.io",
+            "url": "https://jpdb.io"
+        },
+        "description": "",
+        "summary": "Public API for jpdb.io"
+    },
+    "servers": [
+        {
+            "url": "https://jpdb.io"
+        },
+        {
+            "url": "http://localhost:8080",
+            "description": ""
+        }
+    ],
+    "paths": {
+        "/api/v1/ping": {
+            "post": {
+                "summary": "Ping (POST)",
+                "operationId": "v1-ping-post",
+                "responses": {
+                    "200": {
+                        "description": "Pong.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-internal": false,
+                "description": "Pings the server. Useful to check whether the API key is valid."
+            },
+            "parameters": [],
+            "get": {
+                "summary": "Ping (GET)",
+                "operationId": "v1-ping-get",
+                "responses": {
+                    "200": {
+                        "description": "Pong.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                },
+                                "examples": {}
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Pings the server. Useful to check whether the API key is valid."
+            }
+        },
+        "/api/v1/parse": {
+            "post": {
+                "summary": "Parse text",
+                "operationId": "v1-parse",
+                "responses": {
+                    "200": {
+                        "description": "Text was parsed successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "tokens": {
+                                            "type": "array",
+                                            "description": "A list of tokens parsed from the text.",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        },
+                                        "vocabulary": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "tokens"
+                                    ]
+                                },
+                                "examples": {
+                                    "Basic example": {
+                                        "value": {
+                                            "tokens": [
+                                                [
+                                                    0,
+                                                    2,
+                                                    4,
+                                                    [
+                                                        [
+                                                            "知",
+                                                            "し"
+                                                        ],
+                                                        "ってる"
+                                                    ]
+                                                ],
+                                                [
+                                                    1,
+                                                    6,
+                                                    1,
+                                                    null
+                                                ],
+                                                [
+                                                    2,
+                                                    8,
+                                                    2,
+                                                    [
+                                                        [
+                                                            "死",
+                                                            "しに"
+                                                        ],
+                                                        [
+                                                            "神",
+                                                            "がみ"
+                                                        ]
+                                                    ]
+                                                ],
+                                                [
+                                                    3,
+                                                    10,
+                                                    1,
+                                                    null
+                                                ],
+                                                [
+                                                    4,
+                                                    11,
+                                                    3,
+                                                    null
+                                                ],
+                                                [
+                                                    5,
+                                                    14,
+                                                    2,
+                                                    null
+                                                ],
+                                                [
+                                                    6,
+                                                    16,
+                                                    4,
+                                                    [
+                                                        [
+                                                            "食",
+                                                            "た"
+                                                        ],
+                                                        "べ",
+                                                        "ない"
+                                                    ]
+                                                ]
+                                            ],
+                                            "vocabulary": [
+                                                [
+                                                    1420470,
+                                                    2987388496,
+                                                    851156816,
+                                                    "知る",
+                                                    "しる",
+                                                    100,
+                                                    [
+                                                        "to be aware of; to know; to be conscious of; to cognize; to cognise",
+                                                        "to notice; to feel",
+                                                        "to understand; to comprehend; to grasp",
+                                                        "to remember; to be acquainted with (a procedure)",
+                                                        "to experience; to go through; to learn",
+                                                        "to be acquainted with (a person); to get to know",
+                                                        "to concern"
+                                                    ]
+                                                ],
+                                                [
+                                                    2028970,
+                                                    2204756870,
+                                                    2204756870,
+                                                    "か",
+                                                    "か",
+                                                    100,
+                                                    [
+                                                        "indicates a question",
+                                                        "or; whether or not",
+                                                        "some- (e.g. something, someone)",
+                                                        "hmm; huh",
+                                                        "very",
+                                                        "-al; -ial; -ic; -ical; -ish; -y",
+                                                        "in that way"
+                                                    ]
+                                                ],
+                                                [
+                                                    1310890,
+                                                    1197989957,
+                                                    3431657990,
+                                                    "死神",
+                                                    "しにがみ",
+                                                    9000,
+                                                    [
+                                                        "god of death; death deity; Death"
+                                                    ]
+                                                ],
+                                                [
+                                                    2028920,
+                                                    2204744690,
+                                                    2204744690,
+                                                    "は",
+                                                    "は",
+                                                    100,
+                                                    [
+                                                        "indicates sentence topic",
+                                                        "indicates contrast with another option (stated or unstated)",
+                                                        "adds emphasis"
+                                                    ]
+                                                ],
+                                                [
+                                                    1555480,
+                                                    2996971705,
+                                                    2996971705,
+                                                    "リンゴ",
+                                                    "リンゴ",
+                                                    9100,
+                                                    [
+                                                        "apple (fruit)",
+                                                        "apple tree (Malus pumila)"
+                                                    ]
+                                                ],
+                                                [
+                                                    1005460,
+                                                    851346911,
+                                                    851346911,
+                                                    "しか",
+                                                    "しか",
+                                                    200,
+                                                    [
+                                                        "only; nothing but"
+                                                    ]
+                                                ],
+                                                [
+                                                    1358280,
+                                                    1232985445,
+                                                    1573826265,
+                                                    "食べる",
+                                                    "たべる",
+                                                    200,
+                                                    [
+                                                        "to eat",
+                                                        "to live on (e.g. a salary); to live off; to subsist on"
+                                                    ]
+                                                ]
+                                            ]
+                                        }
+                                    },
+                                    "Basic example (multi array)": {
+                                        "value": {
+                                            "tokens": [
+                                                [
+                                                    [
+                                                        0,
+                                                        2,
+                                                        4,
+                                                        [
+                                                            [
+                                                                "知",
+                                                                "し"
+                                                            ],
+                                                            "ってる"
+                                                        ]
+                                                    ],
+                                                    [
+                                                        1,
+                                                        6,
+                                                        1,
+                                                        null
+                                                    ]
+                                                ],
+                                                [
+                                                    [
+                                                        2,
+                                                        0,
+                                                        2,
+                                                        [
+                                                            [
+                                                                "死",
+                                                                "しに"
+                                                            ],
+                                                            [
+                                                                "神",
+                                                                "がみ"
+                                                            ]
+                                                        ]
+                                                    ],
+                                                    [
+                                                        3,
+                                                        2,
+                                                        1,
+                                                        null
+                                                    ],
+                                                    [
+                                                        4,
+                                                        3,
+                                                        3,
+                                                        null
+                                                    ],
+                                                    [
+                                                        5,
+                                                        6,
+                                                        2,
+                                                        null
+                                                    ],
+                                                    [
+                                                        6,
+                                                        8,
+                                                        4,
+                                                        [
+                                                            [
+                                                                "食",
+                                                                "た"
+                                                            ],
+                                                            "べ",
+                                                            "ない"
+                                                        ]
+                                                    ]
+                                                ]
+                                            ],
+                                            "vocabulary": [
+                                                [
+                                                    1420470,
+                                                    2987388496,
+                                                    851156816,
+                                                    "知る",
+                                                    "しる",
+                                                    100,
+                                                    [
+                                                        "to be aware of; to know; to be conscious of; to cognize; to cognise",
+                                                        "to notice; to feel",
+                                                        "to understand; to comprehend; to grasp",
+                                                        "to remember; to be acquainted with (a procedure)",
+                                                        "to experience; to go through; to learn",
+                                                        "to be acquainted with (a person); to get to know",
+                                                        "to concern"
+                                                    ]
+                                                ],
+                                                [
+                                                    2028970,
+                                                    2204756870,
+                                                    2204756870,
+                                                    "か",
+                                                    "か",
+                                                    100,
+                                                    [
+                                                        "indicates a question",
+                                                        "or; whether or not",
+                                                        "some- (e.g. something, someone)",
+                                                        "hmm; huh",
+                                                        "very",
+                                                        "-al; -ial; -ic; -ical; -ish; -y",
+                                                        "in that way"
+                                                    ]
+                                                ],
+                                                [
+                                                    1310890,
+                                                    1197989957,
+                                                    3431657990,
+                                                    "死神",
+                                                    "しにがみ",
+                                                    9000,
+                                                    [
+                                                        "god of death; death deity; Death"
+                                                    ]
+                                                ],
+                                                [
+                                                    2028920,
+                                                    2204744690,
+                                                    2204744690,
+                                                    "は",
+                                                    "は",
+                                                    100,
+                                                    [
+                                                        "indicates sentence topic",
+                                                        "indicates contrast with another option (stated or unstated)",
+                                                        "adds emphasis"
+                                                    ]
+                                                ],
+                                                [
+                                                    1555480,
+                                                    2996971705,
+                                                    2996971705,
+                                                    "リンゴ",
+                                                    "リンゴ",
+                                                    9100,
+                                                    [
+                                                        "apple (fruit)",
+                                                        "apple tree (Malus pumila)"
+                                                    ]
+                                                ],
+                                                [
+                                                    1005460,
+                                                    851346911,
+                                                    851346911,
+                                                    "しか",
+                                                    "しか",
+                                                    200,
+                                                    [
+                                                        "only; nothing but"
+                                                    ]
+                                                ],
+                                                [
+                                                    1358280,
+                                                    1232985445,
+                                                    1573826265,
+                                                    "食べる",
+                                                    "たべる",
+                                                    200,
+                                                    [
+                                                        "to eat",
+                                                        "to live on (e.g. a salary); to live off; to subsist on"
+                                                    ]
+                                                ]
+                                            ]
+                                        }
+                                    },
+                                    "Furigana": {
+                                        "value": {
+                                            "tokens": [
+                                                [
+                                                    0
+                                                ],
+                                                [
+                                                    1
+                                                ],
+                                                [
+                                                    2
+                                                ]
+                                            ],
+                                            "vocabulary": [
+                                                [
+                                                    1584660,
+                                                    2972263243,
+                                                    2008536132,
+                                                    "明日",
+                                                    "あす"
+                                                ],
+                                                [
+                                                    1584660,
+                                                    2972263243,
+                                                    1798294623,
+                                                    "明日",
+                                                    "あした"
+                                                ],
+                                                [
+                                                    1189360,
+                                                    1680194524,
+                                                    1680194524,
+                                                    "どっち",
+                                                    "どっち"
+                                                ]
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Parses given text into tokens.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "text": {
+                                        "description": "The text to parse.",
+                                        "type": [
+                                            "string",
+                                            "array"
+                                        ],
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "token_fields": {
+                                        "type": "array",
+                                        "uniqueItems": true,
+                                        "description": "An ordered list of fields to return for each parsed token.\n\nOnly fields which are specified here will be returned, and in the order in which you specify them.\n\nDo NOT specify all of the fields if you don't need them. Make sure to only include those fields that you actually use; this both saves bandwidth and server resources.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/TokenField"
+                                        }
+                                    },
+                                    "vocabulary_fields": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/VocabularyField"
+                                        }
+                                    },
+                                    "position_length_encoding": {
+                                        "$ref": "#/components/schemas/PositionLengthEncoding",
+                                        "x-stoplight": {
+                                            "id": "h08pt46ya4cpe"
+                                        },
+                                        "description": "Specifies the encoding used to calculate position and length fields."
+                                    },
+                                    "furigana": {
+                                        "type": "array",
+                                        "x-stoplight": {
+                                            "id": "sys8ss2qvvnwr"
+                                        },
+                                        "description": "An array of `[position, length, reading]` specifying the readings for the given text.",
+                                        "items": {}
+                                    }
+                                },
+                                "required": [
+                                    "text",
+                                    "token_fields"
+                                ]
+                            },
+                            "examples": {
+                                "Basic example": {
+                                    "value": {
+                                        "text": "エル知ってるか、死神はリンゴしか食べない。",
+                                        "token_fields": [
+                                            "vocabulary_index",
+                                            "position",
+                                            "length",
+                                            "furigana"
+                                        ],
+                                        "position_length_encoding": "utf16",
+                                        "vocabulary_fields": [
+                                            "vid",
+                                            "sid",
+                                            "rid",
+                                            "spelling",
+                                            "reading",
+                                            "frequency_rank",
+                                            "meanings"
+                                        ]
+                                    }
+                                },
+                                "Basic example (multi array)": {
+                                    "value": {
+                                        "text": [
+                                            "エル知ってるか",
+                                            "死神はリンゴしか食べない"
+                                        ],
+                                        "token_fields": [
+                                            "vocabulary_index",
+                                            "position",
+                                            "length",
+                                            "furigana"
+                                        ],
+                                        "position_length_encoding": "utf16",
+                                        "vocabulary_fields": [
+                                            "vid",
+                                            "sid",
+                                            "rid",
+                                            "spelling",
+                                            "reading",
+                                            "frequency_rank",
+                                            "meanings"
+                                        ]
+                                    }
+                                },
+                                "Furigana": {
+                                    "value": {
+                                        "text": "明日、明日、どっち？",
+                                        "furigana": [
+                                            [
+                                                0,
+                                                2,
+                                                "あす"
+                                            ],
+                                            [
+                                                3,
+                                                2,
+                                                "明日"
+                                            ]
+                                        ],
+                                        "token_fields": [
+                                            "vocabulary_index"
+                                        ],
+                                        "position_length_encoding": "utf16",
+                                        "vocabulary_fields": [
+                                            "vid",
+                                            "sid",
+                                            "rid",
+                                            "spelling",
+                                            "reading"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": ""
+                }
+            }
+        },
+        "/api/v1/lookup-vocabulary": {
+            "post": {
+                "summary": "Lookup vocabulary",
+                "operationId": "v1-lookup-vocabulary",
+                "responses": {
+                    "200": {
+                        "description": "Request was handled successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "vocabulary_info": {
+                                            "type": "array",
+                                            "description": "A table with the requested information.",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "vocabulary_info"
+                                    ]
+                                },
+                                "examples": {
+                                    "Example  1": {
+                                        "value": {
+                                            "vocabulary_info": [
+                                                [
+                                                    "死神",
+                                                    "しにがみ",
+                                                    9100,
+                                                    [
+                                                        "god of death; death deity; Death"
+                                                    ]
+                                                ]
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "list": {
+                                        "type": "array",
+                                        "description": "A list of 2-element arrays with a `vid` and `sid` of vocabulary to lookup.",
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "fields": {
+                                        "type": "array",
+                                        "description": "An ordered list of fields to return for each vocabulary.\n\nOnly fields which are specified here will be returned, and in the order in which you specify them.\n\nDo NOT specify all of the fields if you don't need them. Make sure to only include those fields that you actually use; this both saves bandwidth and server resources.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/VocabularyField"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "list",
+                                    "fields"
+                                ]
+                            },
+                            "examples": {
+                                "Example  1": {
+                                    "value": {
+                                        "list": [
+                                            [
+                                                1310890,
+                                                1197989957
+                                            ]
+                                        ],
+                                        "fields": [
+                                            "spelling",
+                                            "reading",
+                                            "frequency_rank",
+                                            "meanings"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Looks up information about vocabulary for which you already have the IDs.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down"
+            },
+            "parameters": []
+        },
+        "/api/v1/list-user-decks": {
+            "post": {
+                "summary": "List user decks",
+                "tags": [],
+                "responses": {
+                    "201": {
+                        "description": "List of user decks was fetched successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "decks": {
+                                            "type": "array",
+                                            "description": "The list of user's decks.",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "decks"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "v1-list-user-decks",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "fields": {
+                                        "type": "array",
+                                        "description": "An ordered list of fields to return for each deck.\n\nOnly fields which are specified here will be returned, and in the order in which you specify them.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/DeckField"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "fields"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": "Fetches a list of user decks.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down"
+            },
+            "parameters": []
+        },
+        "/api/v1/list-special-decks": {
+            "post": {
+                "summary": "List special decks",
+                "tags": [],
+                "responses": {
+                    "201": {
+                        "description": "List of special decks was fetched successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "decks": {
+                                            "type": "array",
+                                            "description": "The list of user's special decks.",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "decks"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "v1-list-special-decks",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "fields": {
+                                        "type": "array",
+                                        "description": "An ordered list of fields to return for each deck.\n\nOnly fields which are specified here will be returned, and in the order in which you specify them.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/DeckField"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "fields"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": "Fetches a list of special decks.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down"
+            },
+            "parameters": []
+        },
+        "/api/v1/deck/create-empty": {
+            "post": {
+                "summary": "Create a new empty deck",
+                "operationId": "v1-deck-create-empty",
+                "responses": {
+                    "200": {
+                        "description": "A new deck was successfully created.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/components/schemas/UserDeckId",
+                                            "description": "The ID of the newly created deck."
+                                        }
+                                    },
+                                    "required": [
+                                        "id"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Creates a new empty deck.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `too_many_decks` - when the user already has too many decks",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the new deck."
+                                    },
+                                    "position": {
+                                        "type": "integer",
+                                        "description": "Where to put the deck on the user's deck list.\n\nSetting this to `0` will put the newly created deck on top; setting this to `1` will put it 2nd, etc. Optional. If missing it's assumed to be equal to `0`."
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": []
+        },
+        "/api/v1/deck/rename": {
+            "post": {
+                "summary": "Rename a deck",
+                "operationId": "v1-deck-rename",
+                "responses": {
+                    "200": {
+                        "description": "The deck was successfully renamed.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Renames a deck.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `bad_deck` - when a deck with the given `id` doesn't exist",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/UserDeckId"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "New name for the deck."
+                                    }
+                                },
+                                "required": [
+                                    "id",
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": []
+        },
+        "/api/v1/deck/list-vocabulary": {
+            "post": {
+                "summary": "List deck vocabulary",
+                "operationId": "v1-deck-list-vocabulary",
+                "responses": {
+                    "200": {
+                        "description": "Request was handled successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "vocabulary": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        },
+                                        "occurences": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "vocabulary"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Returns a list of deck's vocabulary.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `bad_deck` - when a deck with the given `id` doesn't exist",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/AnyDeckId"
+                                    },
+                                    "fetch_occurences": {
+                                        "type": "boolean",
+                                        "default": false
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": []
+        },
+        "/api/v1/deck/add-vocabulary": {
+            "parameters": [],
+            "post": {
+                "summary": "Add vocabulary to a deck",
+                "operationId": "v1-deck-add-vocabulary",
+                "responses": {
+                    "200": {
+                        "description": "Request was handled successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/AnyDeckId"
+                                    },
+                                    "vocabulary": {
+                                        "type": "array",
+                                        "description": "A list of 2-element arrays with a `vid` and `sid` of vocabulary cards to add.",
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "occurences": {
+                                        "type": "array",
+                                        "description": "Occurence counts of each entry in `vocabulary`. Optional. If present the length of this array must be the same as `vocabulary`. When missing it's equivalent to an array filled with `1`s.",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "replace_existing_occurences": {
+                                        "type": "boolean",
+                                        "default": false,
+                                        "description": "When set to `true` any existing vocabulary in the deck will have their occurence counts replaced by the values is `occurences`. When set to `false` the values from `occurences` will be added to the counts already in the deck."
+                                    },
+                                    "ignore_unknown": {
+                                        "type": "boolean",
+                                        "description": "Whether to ignore invalid IDs in the `vocabulary` array.\n\nWhen `true` any invalid IDs will just be ignored; when `false` none of the vocabulary will be added if there's any invalid entry in the `vocabulary` array.\n\nOptional. Defaults to `false`."
+                                    }
+                                },
+                                "required": [
+                                    "id",
+                                    "vocabulary"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "x-internal": false,
+                "description": "Adds vocabulary to a deck.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `bad_deck` - when a deck with the given `id` doesn't exist or is a built-in deck\n  - (HTTP 400) `bad_vid` - when a vocabulary with the given ID doesn't exist\n  - (HTTP 400) `bad_sid` - when a spelling with the given ID doesn't exist\n  - (HTTP 400) `too_many_cards_in_deck` - when adding the given vocabulary would put this deck over the limit of maximum cards per deck\n  - (HTTP 400) `too_many_cards_in_total` - when adding the given vocabulary would put this account over the limit of maximum cards per account"
+            }
+        },
+        "/api/v1/deck/remove-vocabulary": {
+            "post": {
+                "summary": "Remove vocabulary from a deck",
+                "operationId": "v1-deck-remove-vocabulary",
+                "responses": {
+                    "200": {
+                        "description": "Request was handled successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/AnyDeckId"
+                                    },
+                                    "vocabulary": {
+                                        "type": "array",
+                                        "description": "A list of 2-element arrays with a `vid` and `sid` of vocabulary cards to remove.",
+                                        "items": {
+                                            "type": "array",
+                                            "minItems": 2,
+                                            "maxItems": 2,
+                                            "items": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "id",
+                                    "vocabulary"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "x-internal": false,
+                "description": "Removes vocabulary from a deck.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `bad_deck` - when a deck with the given `id` doesn't exist"
+            },
+            "parameters": []
+        },
+        "/api/v1/deck/clear": {
+            "parameters": [],
+            "post": {
+                "summary": "Clear a deck",
+                "operationId": "v1-deck-clear",
+                "responses": {
+                    "200": {
+                        "description": "The specified deck was successfully cleared.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Clears a deck.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `bad_deck` - when a deck with the given `id` doesn't exist",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/AnyDeckId",
+                                        "description": "ID of the deck to delete."
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/deck/delete": {
+            "parameters": [],
+            "post": {
+                "summary": "Delete a deck",
+                "operationId": "v1-deck-delete",
+                "responses": {
+                    "200": {
+                        "description": "The specified deck was successfully deleted.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Deletes a deck. Cannot be used on special decks.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `bad_deck` - when a deck with the given `id` doesn't exist",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/UserDeckId",
+                                        "description": "ID of the deck to delete."
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/set-card-sentence": {
+            "parameters": [],
+            "post": {
+                "summary": "Set card sentence",
+                "operationId": "v1-set-card-sentence",
+                "responses": {
+                    "200": {
+                        "description": "Request was handled successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "vid": {
+                                        "type": "integer"
+                                    },
+                                    "sid": {
+                                        "type": "integer"
+                                    },
+                                    "sentence": {
+                                        "type": "string",
+                                        "description": "The sentence to set. Optional. Will clear the currently set custom sentence if empty."
+                                    },
+                                    "translation": {
+                                        "type": "string",
+                                        "description": "The sentence translation to set. Optional."
+                                    },
+                                    "clear_audio": {
+                                        "type": "boolean",
+                                        "description": "Whether to also clear the currently set audio.\n\n`true` will force it to be always cleared. `false` will never clear it. Omitting this parameter will decide automatically."
+                                    },
+                                    "clear_image": {
+                                        "type": "boolean",
+                                        "description": "Whether to also clear the currently set image.\n\n`true` will force it to be always cleared. `false` will never clear it. Omitting this parameter will decide automatically."
+                                    }
+                                },
+                                "required": [
+                                    "vid",
+                                    "sid"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "x-internal": false,
+                "description": "Sets a custom card sentence.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `bad_vid` - when a vocabulary with the given ID doesn't exist\n  - (HTTP 400) `bad_sid` - when a spelling with the given ID doesn't exist\n  - (HTTP 400) `bad_sentence` - when the sentence is too long or the given vocabulary was not found in it\n  - (HTTP 400) `bad_translation` - when the translation is too long"
+            }
+        },
+        "/api/v1/review": {
+            "post": {
+                "summary": "Add a new review",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "v1-review",
+                "x-stoplight": {
+                    "id": "12mflt48idkf9"
+                },
+                "description": "Adds a new review.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `bad_vid` - when a vocabulary with the given ID doesn't exist\n  - (HTTP 400) `bad_sid` - when a spelling with the given ID doesn't exist\n",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "vid",
+                                    "sid",
+                                    "grade"
+                                ],
+                                "properties": {
+                                    "vid": {
+                                        "type": "integer",
+                                        "x-stoplight": {
+                                            "id": "w6tpy82rq9paz"
+                                        }
+                                    },
+                                    "sid": {
+                                        "type": "integer",
+                                        "x-stoplight": {
+                                            "id": "2hziug79h9l9q"
+                                        }
+                                    },
+                                    "grade": {
+                                        "x-stoplight": {
+                                            "id": "gngwa56es3u9q"
+                                        },
+                                        "enum": [
+                                            "nothing",
+                                            "something",
+                                            "hard",
+                                            "okay",
+                                            "easy",
+                                            "pass",
+                                            "fail"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ja2en": {
+            "post": {
+                "summary": "Machine-translate Japanese to English",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "Request was handled successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "text",
+                                        "is_truncated"
+                                    ],
+                                    "properties": {
+                                        "text": {
+                                            "type": "string",
+                                            "x-stoplight": {
+                                                "id": "vv1xk7l40soe4"
+                                            },
+                                            "description": "The translated text."
+                                        },
+                                        "is_truncated": {
+                                            "type": "boolean",
+                                            "x-stoplight": {
+                                                "id": "gj9tfsxrajefy"
+                                            },
+                                            "description": "Returns whether the translation was truncated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "v1-ja2en",
+                "x-stoplight": {
+                    "id": "t1s50a1ug8ju9"
+                },
+                "description": "Machine-translates a Japanese sentence into English.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 503) `api_unavailable` - this API endpoint is currently unavailable (when it's down for maintenance, etc.)\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `text_too_long` - the given text (including the context) is too long\n",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "text"
+                                ],
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "x-stoplight": {
+                                            "id": "95rf8rz21mb44"
+                                        },
+                                        "description": "The text to translate."
+                                    },
+                                    "context": {
+                                        "type": "array",
+                                        "x-stoplight": {
+                                            "id": "24c9urmc4nr9m"
+                                        },
+                                        "minItems": 2,
+                                        "maxItems": 2,
+                                        "description": "The context for the translation.\n\nThis should an array with two sentences: a Japanese sentence which immediately preceds the currently translated text, and its English translation.\n\nYou can use this to chain multiple translation requests together, putting the result of the last translation here.",
+                                        "items": {
+                                            "x-stoplight": {
+                                                "id": "aqlefjp5m3d2p"
+                                            },
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Example (with context)": {
+                                    "value": {
+                                        "text": "何も食べなかった。",
+                                        "context": [
+                                            "あやめちゃんが水を飲んだ。",
+                                            "Ayame-chan drank water."
+                                        ]
+                                    }
+                                },
+                                "Example (without context)": {
+                                    "value": {
+                                        "text": "何も食べなかった。"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/en2ja": {
+            "post": {
+                "summary": "Machine-translate English to Japanese",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "Request was handled successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "text",
+                                        "is_truncated"
+                                    ],
+                                    "properties": {
+                                        "text": {
+                                            "type": "string",
+                                            "x-stoplight": {
+                                                "id": "vv1xk7l40soe4"
+                                            },
+                                            "description": "The translated text."
+                                        },
+                                        "is_truncated": {
+                                            "type": "boolean",
+                                            "x-stoplight": {
+                                                "id": "gj9tfsxrajefy"
+                                            },
+                                            "description": "Returns whether the translation was truncated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The request failed or was invalid. Check the error object for more details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Either no API key or a bad API key was specified. Will return an error object with `error` equal to `bad_key`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests. Will return an error object with `error` equal to `too_many_requests`.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "v1-en2ja",
+                "x-stoplight": {
+                    "id": "oeoatsyg64m3j"
+                },
+                "description": "Machine-translates an English sentence into Japanese.\n\nErrors which can be returned by this API:\n  - (HTTP 403) `bad_key` - when the API key is invalid or missing\n  - (HTTP 400) `bad_request` - when the request body doesn't match the schema\n  - (HTTP 503) `api_unavailable` - this API endpoint is currently unavailable (when it's down for maintenance, etc.)\n  - (HTTP 429) `too_many_requests` - when you've made too many requests and need to slow down\n  - (HTTP 400) `text_too_long` - the given text (including the context) is too long\n",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "text"
+                                ],
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "description": "The text to translate."
+                                    },
+                                    "context": {
+                                        "type": "array",
+                                        "minItems": 2,
+                                        "maxItems": 2,
+                                        "description": "The context for the translation.\n\nThis should an array with two sentences: an English sentence which immediately preceds the currently translated text, and its Japanese translation.\n\nYou can use this to chain multiple translation requests together, putting the result of the last translation here.",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Example (with context)": {
+                                    "value": {
+                                        "text": "Let me do it!",
+                                        "context": [
+                                            "That is a job for a girl.",
+                                            "それは女の子に向いてる仕事だよ。"
+                                        ]
+                                    }
+                                },
+                                "Example (without context)": {
+                                    "value": {
+                                        "text": "Let me do it!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Error": {
+                "title": "Error",
+                "type": "object",
+                "additionalProperties": false,
+                "x-stoplight": {
+                    "id": "8d4d56746f21f"
+                },
+                "description": "A generic error type. This is always returned as a reply on failure.",
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "enum": [
+                            "bad_key",
+                            "bad_request",
+                            "bad_deck",
+                            "bad_vid",
+                            "bad_sid",
+                            "bad_rid",
+                            "bad_sentence",
+                            "bad_translation",
+                            "bad_image",
+                            "bad_audio",
+                            "too_many_decks",
+                            "too_many_cards_in_deck",
+                            "too_many_cards_in_total",
+                            "api_unavailable",
+                            "too_many_requests",
+                            "text_too_long"
+                        ],
+                        "description": "A stable, machine-readable error ID."
+                    },
+                    "error_message": {
+                        "type": "string",
+                        "description": "A human-readable error message."
+                    }
+                },
+                "required": [
+                    "error",
+                    "error_message"
+                ]
+            },
+            "DeckField": {
+                "title": "DeckField",
+                "x-stoplight": {
+                    "id": "whnf8tggolt2n"
+                },
+                "type": "string",
+                "enum": [
+                    "id",
+                    "name",
+                    "vocabulary_count",
+                    "word_count",
+                    "vocabulary_known_coverage",
+                    "vocabulary_in_progress_coverage",
+                    "is_built_in"
+                ]
+            },
+            "TokenField": {
+                "title": "TokenField",
+                "x-stoplight": {
+                    "id": "ys0sjesdm2l8i"
+                },
+                "type": "string",
+                "enum": [
+                    "vocabulary_index",
+                    "position",
+                    "length",
+                    "furigana"
+                ],
+                "description": "A field to return for each token."
+            },
+            "VocabularyField": {
+                "title": "VocabularyField",
+                "x-stoplight": {
+                    "id": "lzytgl0v9jcju"
+                },
+                "type": "string",
+                "description": "A field to return for each vocabulary.",
+                "enum": [
+                    "vid",
+                    "sid",
+                    "rid",
+                    "spelling",
+                    "reading",
+                    "frequency_rank",
+                    "meanings",
+                    "card_level",
+                    "card_state",
+                    "due_at",
+                    "alt_sids",
+                    "alt_spellings",
+                    "part_of_speech",
+                    "meanings_part_of_speech",
+                    "meanings_chunks",
+                    "pitch_accent"
+                ]
+            },
+            "AnyDeckId": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/UserDeckId"
+                    },
+                    {
+                        "$ref": "#/components/schemas/SpecialDeckId"
+                    }
+                ],
+                "description": "An ID specifying either a user deck, or a special deck.",
+                "x-stoplight": {
+                    "id": "be70ddf2f7cd2"
+                }
+            },
+            "UserDeckId": {
+                "title": "UserDeckId",
+                "x-stoplight": {
+                    "id": "ev38aw233c8fz"
+                },
+                "type": "integer",
+                "description": "An ID of a user-created deck."
+            },
+            "SpecialDeckId": {
+                "title": "SpecialDeckId",
+                "x-stoplight": {
+                    "id": "s94lzguwcvmju"
+                },
+                "type": "string",
+                "enum": [
+                    "blacklist",
+                    "never-forget"
+                ],
+                "description": "A string specifying a special deck."
+            },
+            "PositionLengthEncoding": {
+                "title": "PositionLengthEncoding",
+                "x-stoplight": {
+                    "id": "79jyzywb7rlbw"
+                },
+                "type": "string",
+                "enum": [
+                    "utf8",
+                    "utf16",
+                    "utf32"
+                ],
+                "description": "The encoding based on which to calculate positions and lengths."
+            }
+        },
+        "securitySchemes": {
+            "api_key": {
+                "type": "http",
+                "scheme": "bearer",
+                "description": "The user API key, as found on the settings page."
+            }
+        }
+    },
+    "security": [
+        {
+            "api_key": []
+        }
+    ]
+}
