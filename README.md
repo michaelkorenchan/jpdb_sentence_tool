@@ -132,6 +132,18 @@ Now when you study the card for a new word like 天気, it will show "今日は�
 
 - **Sentence length limit**: JPDB's custom sentence API has an undocumented length limit (under 108 characters). Longer sentences will fail with a "sentence is too long" error. Additionally, some conjugated verbs may fail validation if JPDB can't match the dictionary form to the conjugated form in the sentence.
 
+## Potential Future Features
+
+- **Setting sentences for cards in existing decks**: Wouldn't have to recreate existing decks to use the tool there. 
+
+- **Setting sentences for more than just "new" cards**: Would allow the user to filter cards by maturity/date first learned/time since last review/etc and assign sentences to only those cards. This would work nicely with the above feature.
+
+- **Clearing custom sentences from cards**: QOL feature for trying to undo custom sentences assigned by mistake or whatnot. Would probably be done per-deck and with filters like the ones in the above feature.
+
+- **Prioritizing sentence variety**: The tool wouldn't just use the sentence containing the first occurence of a word, but also look for one that hasn't been assigned already.
+
+- **Prioritizing i+1 sentences**: When assigning a sentence to a card, the tool would try to choose one with as few other unknown words as possible. The user could also set a maximum number of other unknown words, and filter-out all sentences/cards that have too many.
+
 ## License
 
 MIT
